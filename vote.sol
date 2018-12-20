@@ -31,7 +31,10 @@ contract Vote {
         }
     }
     function decode(uint p, uint x) returns (uint m) {
-        uint K=C1**x%p;
+        uint K = C1;
+        for(uint i=0; i<x-1; i++){
+            K = K*C1%p;
+        }
         for(uint i=0; i<2000; i++){
             if (K*i%p == 1){
                 uint nk=i;
