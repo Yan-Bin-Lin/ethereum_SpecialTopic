@@ -32,7 +32,7 @@ contract Vote {
     }
     function decode(uint p, uint x) returns (uint m) {
         uint K = C1;
-        for(uint i=0; i<x-1; i++){
+        for(uint j=0; j<x-1; j++){
             K = K*C1%p;
         }
         for(uint i=0; i<2000; i++){
