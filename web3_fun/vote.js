@@ -8,7 +8,7 @@ const address = fs.readFileSync('../address.txt').toString()
 let election = new web3.eth.Contract(abi, address)
 
 let caller = 0;/*change here to change who want to vote---------------------------------------------------*/
-let candidate = 2;/*change here to change which candidate caller want to vote-------------------------------------*/
+let candidate = 3;/*change here to change which candidate caller want to vote-------------------------------------*/
 
 let key = JSON.parse(fs.readFileSync('../key.json')).key[Math.floor((Math.random() * 0) )];/*public key ---------------------------------------------------*/
 console.log("key = " );console.log(key)

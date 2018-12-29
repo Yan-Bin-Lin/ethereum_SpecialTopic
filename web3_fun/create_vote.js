@@ -3,8 +3,8 @@ const Web3 = require('web3')
 
 let web3 = new Web3('http://localhost:8545')
 
-const abi = JSON.parse(fs.readFileSync('../contract/vote.abi').toString())
-const address = fs.readFileSync('../address.txt').toString()
+const abi = JSON.parse(fs.readFileSync('./contract/vote.abi').toString())
+const address = fs.readFileSync('./address.txt').toString()
 let election = new web3.eth.Contract(abi, address)
 
 let creater = 0;/*change here to change who create this vote----------------------------------------------*/
@@ -21,6 +21,7 @@ web3.eth.getAccounts().then(function (accounts) {
             from: accounts[creater],//who create a vote
             gas: 3400000,
         }).then(function (receipt) {
+            console.log('open success')
             console.log(receipt)
         });
     }

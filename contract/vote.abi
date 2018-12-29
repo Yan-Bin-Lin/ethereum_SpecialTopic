@@ -17,20 +17,29 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "s",
-				"type": "string"
-			},
-			{
-				"name": "c1",
+				"name": "a",
 				"type": "uint256"
 			},
 			{
-				"name": "c2",
+				"name": "b",
 				"type": "uint256"
 			}
 		],
-		"name": "keyAndVote",
-		"outputs": [],
+		"name": "ext_euclid",
+		"outputs": [
+			{
+				"name": "X",
+				"type": "uint256"
+			},
+			{
+				"name": "Y",
+				"type": "uint256"
+			},
+			{
+				"name": "Q",
+				"type": "uint256"
+			}
+		],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -113,6 +122,51 @@
 			{
 				"name": "m",
 				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "k",
+				"type": "uint256"
+			}
+		],
+		"name": "AddKeys",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "s",
+				"type": "string"
+			},
+			{
+				"name": "c1",
+				"type": "uint256"
+			},
+			{
+				"name": "c2",
+				"type": "uint256"
+			},
+			{
+				"name": "p",
+				"type": "uint256"
+			}
+		],
+		"name": "keyAndVote",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
 			}
 		],
 		"payable": false,
