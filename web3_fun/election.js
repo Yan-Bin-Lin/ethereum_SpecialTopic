@@ -8,12 +8,13 @@ const address = fs.readFileSync('./address.txt').toString()
 let election = new web3.eth.Contract(abi, address)
 
 let id = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
-
+//投票相關的function
 module.exports = {
-
+    //創建新的投票, creater為創建投票人的account address, candidate為候選人資訊，格式為object，password是創投票人自訂的string形式密碼
     create : function(creater, candidate, password){
-        //add pasword
+        //add pasword, 作為身份辨識, 只有知道密碼的人能投票
         let sha3 = web3.utils.soliditySha3(password)
+        //將hash過的密碼傳到合約上
         election.methods.AddKeys(sha3).send({
             from : creater,
             gas : 3400000
@@ -22,8 +23,9 @@ module.exports = {
             console.log(receipt)
             return receipt
         }).then(function(callback){
-            for(let i = 0;i < 3;i ++){
-                //create a new vote
+            //添加候選人到合約中，有幾個候選人要寫在candiate.num上
+            for(let i = 0;i < candidate.num;i ++){
+                //create a new candidate
                 election.methods.createCandidate(candidate.name[i]).send({
                     from: creater,//who create a vote
                     gas: 3400000
@@ -35,8 +37,9 @@ module.exports = {
         })
 
     },
-
+    //投票，要先經由公鑰加密後才傳給合約，caller為投票人的address，candiateID是看你要投給幾號候選人，password是由創投票人決定的密碼(作為身分辨識)，key是創投票人生成的公鑰，key.json有
     vote : function(caller, candiateID, password, key){
+        //以下為加密過程
         let y = Math.floor(Math.random() * (key.p / 2 - 3)) + 2;
         console.log("y = " + y.toString())
 
@@ -57,6 +60,7 @@ module.exports = {
         console.log("c2 = " + C2.toString())
 
         //vote
+        //加密接術後上傳合約
         let message = election.methods.keyAndVote(password, C1, C2, key.p).send({
             from: caller,//who want to a vote
             gas: 3400000
@@ -66,9 +70,10 @@ module.exports = {
         });
 
     },
-
+    //開票，creater為創投票人的account address，candidate為候選人資訊，key是creater的密鑰
     open : function(creater, candidate, key){
         //opening
+        //上傳密鑰
         election.methods.decode(key.p, key.x).call({
             from: creater, //who create a vote
             gas: 3400000
@@ -81,7 +86,7 @@ module.exports = {
             for(let i = 0; i < candidate.num;i ++){
                 count.push(0)
             }
-
+            //將得到的結果因數分解
             while(receipt > 1){
                 for(let i = 0;i < candidate.num; i ++){
                     if(receipt % id[i] == 0){
