@@ -8,6 +8,7 @@ const bytecode = '0x' + fs.readFileSync('./contract/vote.bin').toString()
 let election = new web3.eth.Contract(abi)
 
 module.exports = {
+    //address 為部屬合約的人 的account address，在demo裡是誰不重要
     deploy : function (address) {
         // deploy contract
 
